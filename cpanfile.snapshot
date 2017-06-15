@@ -1,0 +1,55 @@
+# carton snapshot format: version 1.0
+DISTRIBUTIONS
+  ExtUtils-MakeMaker-7.30
+    pathname: B/BI/BINGOS/ExtUtils-MakeMaker-7.30.tar.gz
+    provides:
+      ExtUtils::Command 7.30
+      ExtUtils::Command::MM 7.30
+      ExtUtils::Liblist 7.30
+      ExtUtils::Liblist::Kid 7.30
+      ExtUtils::MM 7.30
+      ExtUtils::MM_AIX 7.30
+      ExtUtils::MM_Any 7.30
+      ExtUtils::MM_BeOS 7.30
+      ExtUtils::MM_Cygwin 7.30
+      ExtUtils::MM_DOS 7.30
+      ExtUtils::MM_Darwin 7.30
+      ExtUtils::MM_MacOS 7.30
+      ExtUtils::MM_NW5 7.30
+      ExtUtils::MM_OS2 7.30
+      ExtUtils::MM_QNX 7.30
+      ExtUtils::MM_UWIN 7.30
+      ExtUtils::MM_Unix 7.30
+      ExtUtils::MM_VMS 7.30
+      ExtUtils::MM_VOS 7.30
+      ExtUtils::MM_Win32 7.30
+      ExtUtils::MM_Win95 7.30
+      ExtUtils::MY 7.30
+      ExtUtils::MakeMaker 7.30
+      ExtUtils::MakeMaker::Config 7.30
+      ExtUtils::MakeMaker::Locale 7.30
+      ExtUtils::MakeMaker::_version 7.30
+      ExtUtils::MakeMaker::charstar 7.30
+      ExtUtils::MakeMaker::version 7.30
+      ExtUtils::MakeMaker::version::regex 7.30
+      ExtUtils::MakeMaker::version::vpp 7.30
+      ExtUtils::Mkbootstrap 7.30
+      ExtUtils::Mksymlists 7.30
+      ExtUtils::testlib 7.30
+      MM 7.30
+      MY 7.30
+    requirements:
+      Data::Dumper 0
+      Encode 0
+      File::Basename 0
+      File::Spec 0.8
+      Pod::Man 0
+      perl 5.006
+  JSON-2.94
+    pathname: I/IS/ISHIGAKI/JSON-2.94.tar.gz
+    provides:
+      JSON 2.94
+      JSON::Backend::PP 2.94
+    requirements:
+      ExtUtils::MakeMaker 0
+      Test::More 0
