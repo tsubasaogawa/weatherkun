@@ -7,22 +7,15 @@ use JSON;
 use Encode;
 use Data::Dumper;
 
-require './common.pl';
+require './wkcommon.pl';
+require './get_weather.pl';
 
-my $api_uri = 'https://map.yahooapis.jp/weather/V1/place';
 my @coordinates = (139, 35);
-my $output = 'json';
-my $date = '20170617230000';
-my $yahoo_app_id = common::get_yahoo_app_id();
+my $date = '201706182200';
+my $yahoo_app_id = WKCommon::get_yahoo_app_id();
 
-my $user_agent = LWP::UserAgent->new;
-my $uri = "${api_uri}?coordinates=$coordinates[0],$coordinates[1]&appid=$yahoo_app_id&output=$output&date=$date";
-my $request = HTTP::Request->new(GET => $uri);
-
-$request->header("Content-Type" => "application/json");
-my $response = $user_agent->request($request);
-
-print Dumper $response;
+my $request = GetWeather::set_request(@coordinates, $yahoo_app_id, $date);
+my $response = GetWeather::get_response($request);
 
 if($response->is_success) {
   my $json = JSON->new->decode($response->content);
