@@ -14,7 +14,7 @@ my @coordinates = (139, 35);
 my $date = '201706182200';
 my $yahoo_app_id = WKCommon::get_yahoo_app_id();
 
-my $request = GetWeather::set_request(@coordinates, $yahoo_app_id, $date);
+my $request = GetWeather::get_request_instance(@coordinates, $yahoo_app_id, $date);
 my $response = GetWeather::get_response($request);
 
 if($response->is_success) {
