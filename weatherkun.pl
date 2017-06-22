@@ -29,6 +29,9 @@ sub will_it_rain {
 sub report_forecast {
 }
 
+# main
+
+# get weather data
 my $request = GetWeather::create_request_instance(@coordinates, $yahoo_app_id, $date);
 my $response = GetWeather::get_response($request);
 
@@ -37,14 +40,22 @@ if(! $response->is_success) {
 }
 
 my $json = JSON->new->decode($response->content);
-# print $json->{ResultInfo}, "\n";
+# a record of @weather has three keys: 'Type', 'Rainfall' and 'Date'.
+my $weather = $json->{Feature}[0]->{Property}->{WeatherList}->{Weather};
+
+# pick up values of rainfall
+my @rainfalls = ();
+foreach my $rainfall (@{$weather}) {
+  print Dumper $rainfall->{Rainfall};
+  # push(@rainfalls, $$rainfall{'Rainfall'});
+}
 
 # processing json
 
-if(will_it_rain()) {
-  my $report_ret = report_forecast();
-  die 'report_forecast(): failed.' if(! $report_ret);
-}
+# if(will_it_rain()) {
+#   my $report_ret = report_forecast();
+#   die 'report_forecast(): failed.' if(! $report_ret);
+# }
 
 1;
 
