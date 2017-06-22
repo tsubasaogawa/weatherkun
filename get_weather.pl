@@ -2,8 +2,8 @@ package GetWeather;
 
 my $api_uri = 'https://map.yahooapis.jp/weather/V1/place';
 
-sub get_request_instance {
-  die 'get_request_instance(): argc is invalid.' if(@_ != 4);
+sub create_request_instance {
+  die 'create_request_instance(): argc is invalid.' if(@_ != 4);
 
   my @coordinates = (shift, shift);
   my $appid = shift;

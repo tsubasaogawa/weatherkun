@@ -25,7 +25,10 @@ sub will_it_rain {
   return $raining_flag;
 }
 
-my $request = GetWeather::get_request_instance(@coordinates, $yahoo_app_id, $date);
+sub report_forecast {
+}
+
+my $request = GetWeather::create_request_instance(@coordinates, $yahoo_app_id, $date);
 my $response = GetWeather::get_response($request);
 
 if(! $response->is_success) {
