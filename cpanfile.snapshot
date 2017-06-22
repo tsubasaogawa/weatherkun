@@ -20,6 +20,17 @@ DISTRIBUTIONS
       Path::Class 0.26
       Try::Tiny 0.19
       perl 5.006
+  Date-Simple-3.03
+    pathname: I/IZ/IZUT/Date-Simple-3.03.tar.gz
+    provides:
+      Date::Simple 3.03
+      Date::Simple::D8 undef
+      Date::Simple::Fmt undef
+      Date::Simple::ISO undef
+    requirements:
+      ExtUtils::MakeMaker 0
+      Scalar::Util 0
+      Test::More 0
   Encode-Locale-1.05
     pathname: G/GA/GAAS/Encode-Locale-1.05.tar.gz
     provides:
