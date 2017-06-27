@@ -16,6 +16,7 @@ my @coordinates = (139, 35);
 my $now = Date::Simple->new();
 my $date = $now->format('%Y%m%d%H%M');
 my $yahoo_app_id = WKCommon::get_yahoo_app_id();
+my $raining_threshold = 0.1;
 
 sub will_it_rain {
   my @rainfalls = @_;
