@@ -20,14 +20,19 @@ my $raining_threshold = 0.1;
 
 sub will_it_rain {
   my @rainfalls = @_;
-  my $raining_flag = undef;
+  my $raining_flag = 0;
 
-  # processing
+  foreach my $rainfall (@rainfalls) {
+    print "$rainfall vs. $raining_threshold\n";
+    $raining_flag = 1 if($rainfall > $raining_threshold);
+  }
 
   return $raining_flag;
 }
 
 sub report_forecast {
+  print "Today it will rain.\n";
+  return 0;
 }
 
 # main
@@ -47,16 +52,13 @@ my $weather = $json->{Feature}[0]->{Property}->{WeatherList}->{Weather};
 # pick up values of rainfall
 my @rainfalls = ();
 foreach my $rainfall (@{$weather}) {
-  print Dumper $rainfall->{Rainfall};
-  # push(@rainfalls, $$rainfall{'Rainfall'});
+  push(@rainfalls, $rainfall->{Rainfall});
 }
 
-# processing json
-
-# if(will_it_rain()) {
-#   my $report_ret = report_forecast();
-#   die 'report_forecast(): failed.' if(! $report_ret);
-# }
+if(&will_it_rain(@rainfalls)) {
+  my $report_ret = report_forecast();
+  die 'report_forecast(): failed.' if($report_ret != 0);
+}
 
 1;
 
