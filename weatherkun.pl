@@ -18,6 +18,26 @@ my $date = $now->format('%Y%m%d%H%M');
 my $yahoo_app_id = WKCommon::get_yahoo_app_id();
 my $raining_threshold = 0.1;
 
+sub get_rainfalls {
+  my $request = GetWeather::create_request_instance(@coordinates, $yahoo_app_id, $date);
+  my $response = GetWeather::get_response($request);
+
+  if(! $response->is_success) {
+    die "response error: ", $response->status_line, "\n";
+  }
+
+  my $json = JSON->new->decode($response->content);
+  # a record of @weather has three keys: 'Type', 'Rainfall' and 'Date'.
+  my $weather = $json->{Feature}[0]->{Property}->{WeatherList}->{Weather};
+
+  # pick up values of rainfall
+  my @rainfalls = ();
+  foreach my $rainfall (@{$weather}) {
+    push(@rainfalls, $rainfall->{Rainfall});
+  }
+  return @rainfalls;
+}
+
 sub will_it_rain {
   my @rainfalls = @_;
   my $raining_flag = 0;
@@ -38,22 +58,7 @@ sub report_forecast {
 # main
 
 # get weather data
-my $request = GetWeather::create_request_instance(@coordinates, $yahoo_app_id, $date);
-my $response = GetWeather::get_response($request);
-
-if(! $response->is_success) {
-  die "response error: ", $response->status_line, "\n";
-}
-
-my $json = JSON->new->decode($response->content);
-# a record of @weather has three keys: 'Type', 'Rainfall' and 'Date'.
-my $weather = $json->{Feature}[0]->{Property}->{WeatherList}->{Weather};
-
-# pick up values of rainfall
-my @rainfalls = ();
-foreach my $rainfall (@{$weather}) {
-  push(@rainfalls, $rainfall->{Rainfall});
-}
+my @rainfalls = &get_rainfalls();
 
 if(&will_it_rain(@rainfalls)) {
   my $report_ret = report_forecast();
