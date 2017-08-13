@@ -12,14 +12,14 @@ use Date::Simple;
 require './wkcommon.pl';
 require './get_weather.pl';
 
-my @coordinates = (139, 35);
+my @coordinates = (35.681167, 139.767052);
 my $now = Date::Simple->new();
 my $date = $now->format('%Y%m%d%H%M');
-my $yahoo_app_id = WKCommon::get_yahoo_app_id();
+my $app_id = WKCommon::app_id();
 my $raining_threshold = 0.1;
 
-sub get_rainfalls {
-  my $request = GetWeather::create_request_instance(@coordinates, $yahoo_app_id, $date);
+sub get_rain_probability {
+  my $request = GetWeather::create_request_instance(@coordinates, $app_id);
   my $response = GetWeather::get_response($request);
 
   if(! $response->is_success) {
@@ -27,25 +27,16 @@ sub get_rainfalls {
   }
 
   my $json = JSON->new->decode($response->content);
-  # a record of @weather has three keys: 'Type', 'Rainfall' and 'Date'.
-  my $weather = $json->{Feature}[0]->{Property}->{WeatherList}->{Weather};
+  my $rain_prob = $json->{hourly}->{data}[0]->{precipProbability};
 
-  # pick up values of rainfall
-  my @rainfalls = ();
-  foreach my $rainfall (@{$weather}) {
-    push(@rainfalls, $rainfall->{Rainfall});
-  }
-  return @rainfalls;
+  return $rain_prob;
 }
 
 sub will_it_rain {
-  my @rainfalls = @_;
+  my $rain_prob = &get_rain_probability();
   my $raining_flag = 0;
 
-  foreach my $rainfall (@rainfalls) {
-    print "$rainfall vs. $raining_threshold\n";
-    $raining_flag = 1 if($rainfall > $raining_threshold);
-  }
+  $raining_flag = 1 if($rain_prob > $raining_threshold);
 
   return $raining_flag;
 }
@@ -57,10 +48,7 @@ sub report_forecast {
 
 # main
 
-# get weather data
-my @rainfalls = &get_rainfalls();
-
-if(&will_it_rain(@rainfalls)) {
+if(&will_it_rain()) {
   my $report_ret = report_forecast();
   die 'report_forecast(): failed.' if($report_ret != 0);
 }

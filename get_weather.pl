@@ -1,15 +1,14 @@
 package GetWeather;
 
-my $api_uri = 'https://map.yahooapis.jp/weather/V1/place';
+my $api_uri = 'https://api.darksky.net/forecast';
 
 sub create_request_instance {
-  die 'create_request_instance(): argc is invalid.' if(@_ != 4);
+  die 'create_request_instance(): argc is invalid.' if(@_ != 3);
 
-  my @coordinates = (shift, shift);
+  my($lat, $lon) = (shift, shift);
   my $appid = shift;
-  my $date = shift;
 
-  my $uri = "${api_uri}?coordinates=$coordinates[0],$coordinates[1]&appid=$appid&output=json&date=$date";
+  my $uri = "${api_uri}/$appid/$lat,$lon";
   my $request = HTTP::Request->new(GET => $uri);
   return $request;
 }
