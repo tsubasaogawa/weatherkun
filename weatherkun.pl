@@ -7,7 +7,6 @@ use LWP::UserAgent;
 use JSON;
 use Encode;
 use Data::Dumper;
-use Date::Simple;
 
 require './wkcommon.pl';
 require './get_weather.pl';
