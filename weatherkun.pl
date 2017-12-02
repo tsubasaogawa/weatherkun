@@ -45,7 +45,7 @@ sub report_forecast {
 
 # main
 
-system("echo '$date started' >> /var/log/weatherkun.log");
+system("echo '$date started' >> ./weatherkun.log");
 if(&will_it_rain()) {
   my $report_ret = report_forecast();
   die 'report_forecast(): failed.' if($report_ret != 0);
